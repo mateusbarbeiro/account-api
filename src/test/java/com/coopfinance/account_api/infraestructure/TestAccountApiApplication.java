@@ -1,5 +1,6 @@
-package com.coopfinance.account_api;
+package com.coopfinance.account_api.infraestructure;
 
+import com.coopfinance.account_api.AccountApiApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestAccountApiApplication {
@@ -7,5 +8,4 @@ public class TestAccountApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.from(AccountApiApplication::main).with(TestcontainersConfiguration.class).run(args);
 	}
-
 }
