@@ -1,0 +1,43 @@
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  db:
+    image: postgres:16-alpine
+    container_name: account-api-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432" # Expõe a porta do Postgres para o local
+    networks:
+      - app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persiste os dados do banco
+    healthcheck: # Verifica se o banco de dados está pronto para conexões
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: . # Constrói a imagem a partir do Dockerfile no diretório atual
+    container_name: account_api
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+# Declaração dos volumes e redes
+volumes:
+  postgres-data: # Volume nomeado para persistir os dados
+
+networks:
+  app-network: # Rede customizada para os serviços se comunicarem

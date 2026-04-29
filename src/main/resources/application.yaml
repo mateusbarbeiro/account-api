@@ -1,3 +1,9 @@
 spring:
   application:
     name: account-api
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:account-api}
+    username: ${DB_USER:account-api}
+    password: ${DB_PASSWORD:account-api}
+    driver-class-name: org.postgresql.Driver
