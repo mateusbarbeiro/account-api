@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: API CoopFinance - Conta Corrente
+  description: API REST para gerenciamento de contas correntes e movimentações financeiras.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor de Desenvolvimento Local
+
+paths:
+  /api/v1/contas:
+    post:
+      tags:
+        - ContaCorrente
+      summary: Abertura de conta
+      description: Cria uma nova conta corrente com número e dígito verificador únicos atrelados a um CPF/CNPJ.
+      operationId: abrirConta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AberturaContaRequest'
+      responses:
+        '201':
+          description: Conta criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContaResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /api/v1/contas/deposito:
+    post:
+      tags:
+        - ContaCorrente
+      summary: Depósito em conta
+      description: Realiza um depósito informando a conta e o valor.
+      operationId: realizarDeposito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositoRequest'
+      responses:
+        '200':
+          description: Depósito realizado com sucesso
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/v1/contas/saque:
+    post:
+      tags:
+        - ContaCorrente
+      summary: Saque em conta
+      description: Realiza um saque informando a conta e o valor.
+      operationId: realizarSaque
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaqueRequest'
+      responses:
+        '200':
+          description: Saque realizado com sucesso
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /api/v1/contas/transferencia:
+    post:
+      tags:
+        - ContaCorrente
+      summary: Transferência entre contas
+      description: Realiza transferência informando conta de origem, conta de destino e valor.
+      operationId: realizarTransferencia
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferenciaRequest'
+      responses:
+        '200':
+          description: Transferência realizada com sucesso
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /api/v1/contas/{numeroConta}/extrato:
+    get:
+      tags:
+        - ContaCorrente
+      summary: Consulta de movimentações (Extrato bancário)
+      description: Retorna o saldo total e as movimentações, permitindo filtrar por períodos anteriores.
+      operationId: consultarExtrato
+      parameters:
+        - name: numeroConta
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: dataInicio
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Data inicial para o filtro de movimentações.
+        - name: dataFim
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Data final para o filtro de movimentações.
+      responses:
+        '200':
+          description: Extrato consultado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtratoResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    AberturaContaRequest:
+      type: object
+      required:
+        - cpfCnpj
+      properties:
+        cpfCnpj:
+          type: string
+          description: Documento do cooperado.
+
+    ContaResponse:
+      type: object
+      properties:
+        numeroConta:
+          type: string
+        digitoVerificador:
+          type: string
+        cpfCnpj:
+          type: string
+
+    DepositoRequest:
+      type: object
+      required:
+        - numeroConta
+        - valor
+      properties:
+        numeroConta:
+          type: string
+        valor:
+          type: number
+          format: double
+          minimum: 0.01
+
+    SaqueRequest:
+      type: object
+      required:
+        - numeroConta
+        - valor
+      properties:
+        numeroConta:
+          type: string
+        valor:
+          type: number
+          format: double
+          minimum: 0.01
+
+    TransferenciaRequest:
+      type: object
+      required:
+        - contaOrigem
+        - contaDestino
+        - valor
+      properties:
+        contaOrigem:
+          type: string
+        contaDestino:
+          type: string
+        valor:
+          type: number
+          format: double
+          minimum: 0.01
+
+    ExtratoResponse:
+      type: object
+      properties:
+        saldoTotal:
+          type: number
+          format: double
+        movimentacoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MovimentacaoResponse'
+
+    MovimentacaoResponse:
+      type: object
+      properties:
+        data:
+          type: string
+          format: date-time
+        tipo:
+          type: string
+          enum: [DEPOSITO, SAQUE, TRANSFERENCIA_ENTRADA, TRANSFERENCIA_SAIDA]
+        valor:
+          type: number
+          format: double
+
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Requisição mal formatada ou parâmetros inválidos.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    NotFound:
+      description: Recurso não encontrado (ex. Conta não existe).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
+    UnprocessableEntity:
+      description: Erro de regra de negócio (ex. Saldo insuficiente).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetail'
