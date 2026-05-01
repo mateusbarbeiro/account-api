@@ -105,4 +105,4 @@ classDiagram
     OrdemTransferencia o-- ContaCorrente : contaOrigem
     OrdemTransferencia o-- ContaCorrente : contaDestino
     OrdemTransferencia *-- Transferencia : transacoesGeradas
-````
+```
