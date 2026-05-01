@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +24,8 @@ class OrdemTransferenciaTest {
     void setUp() {
         Documento documento1 = new Documento("12345678901");
         Documento documento2 = new Documento("98765432109");
-        contaOrigem = new ContaCorrente("11111", documento1);
-        contaDestino = new ContaCorrente("22222", documento2);
+        contaOrigem = new ContaCorrente(UUID.randomUUID(), "11111", documento1);
+        contaDestino = new ContaCorrente(UUID.randomUUID(), "22222", documento2);
         contaOrigem.depositar(new BigDecimal("1000.00"));
     }
 
@@ -32,7 +33,7 @@ class OrdemTransferenciaTest {
     @DisplayName("Deve criar uma ordem de transferência com sucesso")
     void deveCriarOrdemTransferenciaComSucesso() {
         BigDecimal valor = new BigDecimal("100.00");
-        OrdemTransferencia ordem = new OrdemTransferencia(contaOrigem, contaDestino, valor);
+        OrdemTransferencia ordem = new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, valor);
 
         assertNotNull(ordem.getId());
         assertEquals(contaOrigem, ordem.getContaOrigem());
@@ -47,7 +48,7 @@ class OrdemTransferenciaTest {
     @DisplayName("Não deve criar ordem de transferência com valor zero")
     void naoDeveCriarOrdemComValorZero() {
         ValorInvalidoException exception = assertThrows(ValorInvalidoException.class, () ->
-            new OrdemTransferencia(contaOrigem, contaDestino, BigDecimal.ZERO)
+            new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, BigDecimal.ZERO)
         );
         assertEquals("Valor da transferência deve ser maior que zero.", exception.getMessage());
     }
@@ -56,7 +57,7 @@ class OrdemTransferenciaTest {
     @DisplayName("Não deve criar ordem de transferência com valor negativo")
     void naoDeveCriarOrdemComValorNegativo() {
         ValorInvalidoException exception = assertThrows(ValorInvalidoException.class, () ->
-            new OrdemTransferencia(contaOrigem, contaDestino, new BigDecimal("-50.00"))
+            new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, new BigDecimal("-50.00"))
         );
         assertEquals("Valor da transferência deve ser maior que zero.", exception.getMessage());
     }
@@ -65,7 +66,7 @@ class OrdemTransferenciaTest {
     @DisplayName("Não deve criar ordem de transferência com valor nulo")
     void naoDeveCriarOrdemComValorNulo() {
         ValorInvalidoException exception = assertThrows(ValorInvalidoException.class, () ->
-            new OrdemTransferencia(contaOrigem, contaDestino, null)
+            new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, null)
         );
         assertEquals("Valor da transferência deve ser maior que zero.", exception.getMessage());
     }
@@ -74,7 +75,7 @@ class OrdemTransferenciaTest {
     @DisplayName("Não deve criar ordem de transferência para a mesma conta")
     void naoDeveCriarOrdemParaMesmaConta() {
         NumeroContaInvalidoException exception = assertThrows(NumeroContaInvalidoException.class, () ->
-            new OrdemTransferencia(contaOrigem, contaOrigem, new BigDecimal("100.00"))
+            new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaOrigem, new BigDecimal("100.00"))
         );
         assertEquals("A conta de origem e destino não podem ser as mesmas.", exception.getMessage());
     }
@@ -83,9 +84,9 @@ class OrdemTransferenciaTest {
     @DisplayName("Deve efetivar a transferência com sucesso")
     void deveEfetivarTransferenciaComSucesso() {
         BigDecimal valor = new BigDecimal("200.00");
-        OrdemTransferencia ordem = new OrdemTransferencia(contaOrigem, contaDestino, valor);
+        OrdemTransferencia ordem = new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, valor);
 
-        ordem.efetivar();
+        ordem.efetivar(UUID.randomUUID(), UUID.randomUUID());
 
         assertEquals(OrdemTransferencia.StatusTransferencia.CONCLUIDA, ordem.getStatus());
         assertEquals(new BigDecimal("800.00"), contaOrigem.getSaldo());
@@ -97,9 +98,9 @@ class OrdemTransferenciaTest {
     @DisplayName("Deve falhar ao tentar efetivar transferência com saldo insuficiente")
     void deveFalharAoEfetivarComSaldoInsuficiente() {
         BigDecimal valor = new BigDecimal("1500.00"); // Maior que o saldo da contaOrigem
-        OrdemTransferencia ordem = new OrdemTransferencia(contaOrigem, contaDestino, valor);
+        OrdemTransferencia ordem = new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, valor);
 
-        assertThrows(SaldoInsuficienteException.class, ordem::efetivar);
+        assertThrows(SaldoInsuficienteException.class, () -> ordem.efetivar(UUID.randomUUID(), UUID.randomUUID()));
 
         assertEquals(OrdemTransferencia.StatusTransferencia.FALHOU, ordem.getStatus());
         assertEquals(new BigDecimal("1000.00"), contaOrigem.getSaldo()); // Saldo não deve mudar
@@ -111,9 +112,9 @@ class OrdemTransferenciaTest {
     @DisplayName("Deve gerar transações de débito e crédito corretamente")
     void deveGerarTransacoesCorretamente() {
         BigDecimal valor = new BigDecimal("150.00");
-        OrdemTransferencia ordem = new OrdemTransferencia(contaOrigem, contaDestino, valor);
+        OrdemTransferencia ordem = new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, valor);
 
-        ordem.efetivar();
+        ordem.efetivar(UUID.randomUUID(), UUID.randomUUID());
 
         Transferencia transacaoDebito = ordem.getTransacoesGeradas().stream()
                 .filter(t -> t.getContaCorrente().equals(contaOrigem))

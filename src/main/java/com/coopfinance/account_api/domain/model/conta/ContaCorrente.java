@@ -15,8 +15,8 @@ public class ContaCorrente {
     private BigDecimal saldo;
     private final Long versao;
 
-    public ContaCorrente(String numero, Documento documento) {
-        this.id = UUID.randomUUID();
+    public ContaCorrente(UUID id, String numero, Documento documento) {
+        this.id = id;
         this.numero = new NumeroConta(numero);
         this.documento = documento;
         this.saldo = BigDecimal.ZERO;

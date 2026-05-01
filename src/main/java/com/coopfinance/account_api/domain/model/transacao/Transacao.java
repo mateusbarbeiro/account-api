@@ -18,8 +18,8 @@ public abstract class Transacao {
     private final BigDecimal saldoAnterior;
     private final BigDecimal saldoApos;
 
-    public Transacao(ContaCorrente contaCorrente, BigDecimal valorMovimentado, BigDecimal saldoAnterior, BigDecimal saldoApos) {
-        this.id = UUID.randomUUID();
+    public Transacao(UUID id, ContaCorrente contaCorrente, BigDecimal valorMovimentado, BigDecimal saldoAnterior, BigDecimal saldoApos) {
+        this.id = id;
         this.contaCorrente = contaCorrente;
         this.valorMovimentado = valorMovimentado;
         this.dataHoraTransacao = LocalDateTime.now();

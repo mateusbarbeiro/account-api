@@ -17,7 +17,7 @@ class ContaCorrenteTest {
     @DisplayName("Deve criar conta corrente com sucesso usando construtor simplificado")
     void deveCriarContaCorrenteConstrutorSimplificado() {
         Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente("12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
 
         assertNotNull(conta.getId());
         assertEquals("12345", conta.getNumeroConta());
@@ -89,7 +89,7 @@ class ContaCorrenteTest {
     @DisplayName("Não deve permitir saque com valor negativo ou nulo")
     void naoDevePermitirSaqueComValorInvalido() {
         Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente("12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
         conta.depositar(new BigDecimal("100.00"));
 
         assertThrows(ValorInvalidoException.class, () -> conta.sacar(BigDecimal.ZERO));
@@ -101,7 +101,7 @@ class ContaCorrenteTest {
     @DisplayName("Deve realizar depósito com sucesso")
     void deveRealizarDepositoComSucesso() {
         Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente("12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
 
         conta.depositar(new BigDecimal("50.00"));
 
@@ -112,7 +112,7 @@ class ContaCorrenteTest {
     @DisplayName("Não deve permitir depósito com valor negativo ou nulo")
     void naoDevePermitirDepositoComValorInvalido() {
         Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente("12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
 
         assertThrows(ValorInvalidoException.class, () -> conta.depositar(BigDecimal.ZERO));
         assertThrows(ValorInvalidoException.class, () -> conta.depositar(new BigDecimal("-20.00")));

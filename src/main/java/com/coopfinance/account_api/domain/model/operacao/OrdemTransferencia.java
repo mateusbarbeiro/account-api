@@ -29,11 +29,11 @@ public class OrdemTransferencia {
     private StatusTransferencia status;
     private final List<Transferencia> transacoesGeradas = new ArrayList<>();
 
-    public OrdemTransferencia(ContaCorrente contaOrigem, ContaCorrente contaDestino, BigDecimal valor) {
+    public OrdemTransferencia(UUID id, ContaCorrente contaOrigem, ContaCorrente contaDestino, BigDecimal valor) {
         validarValorTransferencia(valor);
         validarContasTransferencia(contaOrigem, contaDestino);
 
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
         this.valor = valor;
@@ -41,31 +41,31 @@ public class OrdemTransferencia {
         setStatusPendente();
     }
 
-    public void efetivar() {
+    public void efetivar(UUID idTransacaoDebito, UUID idTransacaoCredito) {
         try {
             setStatusConcluida();
-            this.transacoesGeradas.add(gerarTransacaoDebito());
-            this.transacoesGeradas.add(gerarTransacaoCredito());
+            this.transacoesGeradas.add(gerarTransacaoDebito(idTransacaoDebito));
+            this.transacoesGeradas.add(gerarTransacaoCredito(idTransacaoCredito));
         } catch (Exception e) {
             setStatusFalha();
             throw e;
         }
     }
 
-    private Transferencia gerarTransacaoDebito() {
+    private Transferencia gerarTransacaoDebito(UUID uuid) {
         validarStatusTransferenciaParaGerarTransacao();
         BigDecimal saldoAnterior = this.contaOrigem.getSaldo();
         this.contaOrigem.sacar(this.valor);
 
-        return new TransferenciaEnviada(this.contaOrigem, this.valor.negate(), saldoAnterior, this.contaOrigem.getSaldo(), this);
+        return new TransferenciaEnviada(uuid, this.contaOrigem, this.valor.negate(), saldoAnterior, this.contaOrigem.getSaldo(), this);
     }
 
-    private Transferencia gerarTransacaoCredito() {
+    private Transferencia gerarTransacaoCredito(UUID uuid) {
         validarStatusTransferenciaParaGerarTransacao();
         BigDecimal saldoAnterior = this.contaDestino.getSaldo();
         this.contaDestino.depositar(this.valor);
 
-        return new TransferenciaRecebida(this.contaDestino, this.valor, saldoAnterior, this.contaDestino.getSaldo(), this);
+        return new TransferenciaRecebida(uuid, this.contaDestino, this.valor, saldoAnterior, this.contaDestino.getSaldo(), this);
     }
 
     private void validarStatusTransferenciaParaGerarTransacao() {

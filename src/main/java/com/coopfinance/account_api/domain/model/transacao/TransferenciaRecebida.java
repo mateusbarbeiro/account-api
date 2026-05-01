@@ -4,10 +4,11 @@ import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
 import com.coopfinance.account_api.domain.model.operacao.OrdemTransferencia;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class TransferenciaRecebida extends Transferencia {
-    public TransferenciaRecebida(ContaCorrente contaCorrente, BigDecimal valorMovimentado, BigDecimal saldoAnterior, BigDecimal saldoApos, OrdemTransferencia ordemTransferencia) {
-        super(contaCorrente, valorMovimentado, saldoAnterior, saldoApos, ordemTransferencia);
+    public TransferenciaRecebida(UUID id, ContaCorrente contaCorrente, BigDecimal valorMovimentado, BigDecimal saldoAnterior, BigDecimal saldoApos, OrdemTransferencia ordemTransferencia) {
+        super(id, contaCorrente, valorMovimentado, saldoAnterior, saldoApos, ordemTransferencia);
     }
 
     @Override

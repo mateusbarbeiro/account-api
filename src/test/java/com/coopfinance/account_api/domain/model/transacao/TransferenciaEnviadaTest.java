@@ -6,6 +6,7 @@ import com.coopfinance.account_api.domain.model.operacao.OrdemTransferencia;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,16 +15,17 @@ class TransferenciaEnviadaTest {
 
     @Test
     void deveCriarTransferenciaEnviadaComValoresCorretos() {
-        ContaCorrente contaOrigem = new ContaCorrente("123456", new Documento("12345678909"));
-        ContaCorrente contaDestino = new ContaCorrente("654321", new Documento("98765432100"));
+        ContaCorrente contaOrigem = new ContaCorrente(UUID.randomUUID(), "123456", new Documento("12345678909"));
+        ContaCorrente contaDestino = new ContaCorrente(UUID.randomUUID(), "654321", new Documento("98765432100"));
         
         BigDecimal valorMovimentado = new BigDecimal("-50.00");
         BigDecimal saldoAnterior = new BigDecimal("100.00");
         BigDecimal saldoApos = new BigDecimal("50.00");
         
-        OrdemTransferencia ordemTransferencia = new OrdemTransferencia(contaOrigem, contaDestino, new BigDecimal("50.00"));
+        OrdemTransferencia ordemTransferencia = new OrdemTransferencia(UUID.randomUUID(), contaOrigem, contaDestino, new BigDecimal("50.00"));
 
         TransferenciaEnviada transferenciaEnviada = new TransferenciaEnviada(
+                UUID.randomUUID(),
                 contaOrigem, 
                 valorMovimentado, 
                 saldoAnterior, 
