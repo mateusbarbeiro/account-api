@@ -7,3 +7,8 @@ spring:
     username: ${DB_USER:account-api}
     password: ${DB_PASSWORD:account-api}
     driver-class-name: org.postgresql.Driver
+
+springdoc:
+  swagger-ui:
+    path: /v1/swagger-ui.html
+    url: /openapi.yaml
