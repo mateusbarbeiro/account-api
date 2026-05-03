@@ -12,8 +12,8 @@ class NumeroContaTest {
     @Test
     @DisplayName("Deve instanciar NumeroConta com sucesso quando a conta base for válida")
     void deveInstanciarNumeroContaComSucesso() {
-        NumeroConta numeroConta = new NumeroConta("123456");
-        assertEquals("123456", numeroConta.contaBase());
+        NumeroConta numeroConta = new NumeroConta(123456L);
+        assertEquals(123456L, numeroConta.contaBase());
     }
 
     @Test
@@ -23,7 +23,7 @@ class NumeroContaTest {
                 NumeroContaInvalidoException.class,
                 () -> new NumeroConta(null)
         );
-        assertEquals("A conta base não pode ser nula ou vazia.", exception.getMessage());
+        assertEquals("A conta base não pode ser nula ou menor ou igual a zero.", exception.getMessage());
     }
 
     @Test
@@ -31,19 +31,19 @@ class NumeroContaTest {
     void deveLancarExcecaoQuandoContaBaseVazia() {
         NumeroContaInvalidoException exception = assertThrows(
                 NumeroContaInvalidoException.class,
-                () -> new NumeroConta("   ")
+                () -> new NumeroConta(0L)
         );
-        assertEquals("A conta base não pode ser nula ou vazia.", exception.getMessage());
+        assertEquals("A conta base não pode ser nula ou menor ou igual a zero.", exception.getMessage());
     }
 
     @Test
-    @DisplayName("Deve lançar exceção quando a conta base contiver caracteres não numéricos")
-    void deveLancarExcecaoQuandoContaBaseNaoNumerica() {
+    @DisplayName("Deve lançar exceção quando a conta base for menor que zero")
+    void deveLancarExcecaoQuandoContaBaseMenorQueZero() {
         NumeroContaInvalidoException exception = assertThrows(
                 NumeroContaInvalidoException.class,
-                () -> new NumeroConta("123a45")
+                () -> new NumeroConta(-1L)
         );
-        assertEquals("A conta base deve conter apenas números.", exception.getMessage());
+        assertEquals("A conta base não pode ser nula ou menor ou igual a zero.", exception.getMessage());
     }
 
     @Test
@@ -55,7 +55,7 @@ class NumeroContaTest {
         // Ajustando (> 9 subtrai 9): 1 4 6 2 2
         // Soma = 15 -> Módulo 10 = 5
         // DV = (10 - 5) % 10 = 5
-        NumeroConta numeroConta1 = new NumeroConta("12345");
+        NumeroConta numeroConta1 = new NumeroConta(12345L);
         assertEquals(5, numeroConta1.calcularDigitoVerificador(), "Falha no cálculo do DV para a conta 12345");
 
         // Exemplo 2: Conta base "7992739871"
@@ -64,20 +64,14 @@ class NumeroContaTest {
         // Ajustando: 2 7 7 9 6 7 4 9 9 7
         // Soma = 67 -> Módulo 10 = 7
         // DV = (10 - 7) % 10 = 3
-        NumeroConta numeroConta2 = new NumeroConta("7992739871");
+        NumeroConta numeroConta2 = new NumeroConta(7992739871L);
         assertEquals(3, numeroConta2.calcularDigitoVerificador(), "Falha no cálculo do DV para a conta 7992739871");
 
-        // Exemplo 3: Conta base que resulte em múltiplo de 10 (ex: "0")
-        // Soma = 0 -> Módulo 10 = 0
-        // DV = (10 - 0) % 10 = 0
-        NumeroConta numeroConta3 = new NumeroConta("0");
-        assertEquals(0, numeroConta3.calcularDigitoVerificador(), "Falha no cálculo do DV para a conta 0");
-        
         // Exemplo 4: Conta base "9"
         // Invertido: 9 -> Peso 2 -> 18 -> Ajuste: 9
         // Soma = 9 -> Módulo 10 = 9
         // DV = (10 - 9) % 10 = 1
-        NumeroConta numeroConta4 = new NumeroConta("9");
+        NumeroConta numeroConta4 = new NumeroConta(9L);
         assertEquals(1, numeroConta4.calcularDigitoVerificador(), "Falha no cálculo do DV para a conta 9");
     }
 }

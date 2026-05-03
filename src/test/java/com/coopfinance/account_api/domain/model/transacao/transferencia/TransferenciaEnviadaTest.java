@@ -1,8 +1,9 @@
-package com.coopfinance.account_api.domain.model.transacao;
+package com.coopfinance.account_api.domain.model.transacao.transferencia;
 
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
-import com.coopfinance.account_api.domain.model.conta.Documento;
 import com.coopfinance.account_api.domain.model.operacao.OrdemTransferencia;
+import com.coopfinance.account_api.domain.model.transacao.Transacao;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,8 +16,8 @@ class TransferenciaEnviadaTest {
 
     @Test
     void deveCriarTransferenciaEnviadaComValoresCorretos() {
-        ContaCorrente contaOrigem = new ContaCorrente(UUID.randomUUID(), "123456", new Documento("12345678909"));
-        ContaCorrente contaDestino = new ContaCorrente(UUID.randomUUID(), "654321", new Documento("98765432100"));
+        ContaCorrente contaOrigem = new ContaCorrente(UUID.randomUUID(), 123456L, "12345678909");
+        ContaCorrente contaDestino = new ContaCorrente(UUID.randomUUID(), 654321L, "98765432100");
         
         BigDecimal valorMovimentado = new BigDecimal("-50.00");
         BigDecimal saldoAnterior = new BigDecimal("100.00");
@@ -39,7 +40,7 @@ class TransferenciaEnviadaTest {
         assertNotNull(transferenciaEnviada.getDataHoraTransacao());
         assertEquals(saldoAnterior, transferenciaEnviada.getSaldoAnterior());
         assertEquals(saldoApos, transferenciaEnviada.getSaldoApos());
-        assertEquals(Transacao.TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferenciaEnviada.tipo());
+        Assertions.assertEquals(Transacao.TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferenciaEnviada.tipo());
         assertEquals(ordemTransferencia, transferenciaEnviada.getOrdemTransferencia());
     }
 }

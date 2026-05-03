@@ -16,14 +16,13 @@ class ContaCorrenteTest {
     @Test
     @DisplayName("Deve criar conta corrente com sucesso usando construtor simplificado")
     void deveCriarContaCorrenteConstrutorSimplificado() {
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), 12345L, "12345678909");
 
         assertNotNull(conta.getId());
-        assertEquals("12345", conta.getNumeroConta());
-        assertEquals("5", conta.getDigitoVerificadorConta());
+        assertEquals(12345L, conta.getNumeroConta());
+        assertEquals(5, conta.getDigitoVerificadorConta());
         assertEquals("12345-5", conta.getNumeroContaComposto());
-        assertEquals(documento, conta.getDocumento());
+        assertEquals("12345678909", conta.getDocumento().valor());
         assertEquals(BigDecimal.ZERO, conta.getSaldo());
         assertEquals(0L, conta.getVersao());
     }
@@ -32,15 +31,14 @@ class ContaCorrenteTest {
     @DisplayName("Deve criar conta corrente com sucesso usando construtor completo")
     void deveCriarContaCorrenteConstrutorCompleto() {
         UUID id = UUID.randomUUID();
-        Documento documento = new Documento("12345678909");
         BigDecimal saldoInicial = new BigDecimal("100.00");
-        ContaCorrente conta = new ContaCorrente(id, "12345", "5", documento, saldoInicial, 1L);
+        ContaCorrente conta = new ContaCorrente(id, 12345L, 5, "12345678909", saldoInicial, 1L);
 
         assertEquals(id, conta.getId());
-        assertEquals("12345", conta.getNumeroConta());
-        assertEquals("5", conta.getDigitoVerificadorConta());
+        assertEquals(12345L, conta.getNumeroConta());
+        assertEquals(5, conta.getDigitoVerificadorConta());
         assertEquals("12345-5", conta.getNumeroContaComposto());
-        assertEquals(documento, conta.getDocumento());
+        assertEquals("12345678909", conta.getDocumento().valor());
         assertEquals(saldoInicial, conta.getSaldo());
         assertEquals(1L, conta.getVersao());
     }
@@ -49,10 +47,9 @@ class ContaCorrenteTest {
     @DisplayName("Não deve criar conta corrente com dígito verificador inválido")
     void naoDeveCriarContaComDigitoInvalido() {
         UUID id = UUID.randomUUID();
-        Documento documento = new Documento("12345678909");
-        
+
         NumeroContaInvalidoException exception = assertThrows(NumeroContaInvalidoException.class, () ->
-            new ContaCorrente(id, "12345", "9", documento, BigDecimal.ZERO, 0L)
+            new ContaCorrente(id, 12345L, 9, "12345678909", BigDecimal.ZERO, 0L)
         );
         
         assertEquals("Dígito verificador inválido.", exception.getMessage());
@@ -62,8 +59,7 @@ class ContaCorrenteTest {
     @DisplayName("Deve realizar saque com sucesso quando houver saldo suficiente")
     void deveRealizarSaqueComSucesso() {
         UUID id = UUID.randomUUID();
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(id, "12345", "5", documento, new BigDecimal("100.00"), 0L);
+        ContaCorrente conta = new ContaCorrente(id, 12345L, 5, "12345678909", new BigDecimal("100.00"), 0L);
 
         conta.sacar(new BigDecimal("30.00"));
 
@@ -74,8 +70,7 @@ class ContaCorrenteTest {
     @DisplayName("Não deve permitir saque quando o saldo for insuficiente")
     void naoDevePermitirSaqueComSaldoInsuficiente() {
         UUID id = UUID.randomUUID();
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(id, "12345", "5", documento, new BigDecimal("50.00"), 0L);
+        ContaCorrente conta = new ContaCorrente(id, 12345L, 5, "12345678909", new BigDecimal("50.00"), 0L);
 
         SaldoInsuficienteException exception = assertThrows(SaldoInsuficienteException.class, () ->
             conta.sacar(new BigDecimal("60.00"))
@@ -88,8 +83,7 @@ class ContaCorrenteTest {
     @Test
     @DisplayName("Não deve permitir saque com valor negativo ou nulo")
     void naoDevePermitirSaqueComValorInvalido() {
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), 12345L, "12345678909");
         conta.depositar(new BigDecimal("100.00"));
 
         assertThrows(ValorInvalidoException.class, () -> conta.sacar(BigDecimal.ZERO));
@@ -100,8 +94,7 @@ class ContaCorrenteTest {
     @Test
     @DisplayName("Deve realizar depósito com sucesso")
     void deveRealizarDepositoComSucesso() {
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), 12345L, "12345678909");
 
         conta.depositar(new BigDecimal("50.00"));
 
@@ -111,8 +104,7 @@ class ContaCorrenteTest {
     @Test
     @DisplayName("Não deve permitir depósito com valor negativo ou nulo")
     void naoDevePermitirDepositoComValorInvalido() {
-        Documento documento = new Documento("12345678909");
-        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "12345", documento);
+        ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), 12345L, "12345678909");
 
         assertThrows(ValorInvalidoException.class, () -> conta.depositar(BigDecimal.ZERO));
         assertThrows(ValorInvalidoException.class, () -> conta.depositar(new BigDecimal("-20.00")));

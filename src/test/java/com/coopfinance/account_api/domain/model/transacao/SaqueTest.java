@@ -1,7 +1,6 @@
 package com.coopfinance.account_api.domain.model.transacao;
 
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
-import com.coopfinance.account_api.domain.model.conta.Documento;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -14,7 +13,7 @@ class SaqueTest {
 
     @Test
     void deveCriarSaqueComValoresCorretos() {
-        ContaCorrente contaCorrente = new ContaCorrente(UUID.randomUUID(), "123456", new Documento("12345678909"));
+        ContaCorrente contaCorrente = new ContaCorrente(UUID.randomUUID(), 123456L, "12345678909");
         BigDecimal valorMovimentado = new BigDecimal("50.00");
         BigDecimal saldoAnterior = new BigDecimal("100.00");
         BigDecimal saldoApos = new BigDecimal("50.00");

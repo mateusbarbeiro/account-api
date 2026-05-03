@@ -3,10 +3,12 @@ package com.coopfinance.account_api.domain.model.conta;
 import com.coopfinance.account_api.domain.exception.NumeroContaInvalidoException;
 import com.coopfinance.account_api.domain.exception.SaldoInsuficienteException;
 import com.coopfinance.account_api.domain.exception.ValorInvalidoException;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Getter
 public class ContaCorrente {
 
     private final UUID id;
@@ -15,21 +17,21 @@ public class ContaCorrente {
     private BigDecimal saldo;
     private final Long versao;
 
-    public ContaCorrente(UUID id, String numero, Documento documento) {
+    public ContaCorrente(UUID id, Long numero, String documento, BigDecimal saldo, Long versao) {
         this.id = id;
         this.numero = new NumeroConta(numero);
-        this.documento = documento;
-        this.saldo = BigDecimal.ZERO;
-        this.versao = 0L;
-    }
-
-    public ContaCorrente(UUID id, String numero, String digito, Documento documento, BigDecimal saldo, Long versao) {
-        this.numero = new NumeroConta(numero);
-        validarDigitoVerificador(digito);
-        this.id = id;
-        this.documento = documento;
+        this.documento = new Documento(documento);
         this.saldo = saldo;
         this.versao = versao;
+    }
+
+    public ContaCorrente(UUID id, Long numero, int digito, String documento, BigDecimal saldo, Long versao) {
+        this(id, numero, documento, saldo, versao);
+        validarDigitoVerificador(digito);
+    }
+
+    public ContaCorrente(UUID id, Long numero, String documento) {
+        this(id, numero, documento, BigDecimal.ZERO, 0L);
     }
 
     public void sacar(BigDecimal valor) {
@@ -55,20 +57,14 @@ public class ContaCorrente {
         }
     }
 
-    private void validarDigitoVerificador(String digito) {
-        if (Integer.parseInt(digito) != this.numero.calcularDigitoVerificador())
+    private void validarDigitoVerificador(int digito) {
+        if (digito != this.numero.calcularDigitoVerificador())
             throw new NumeroContaInvalidoException("Dígito verificador inválido.");
     }
 
-    public UUID getId() { return id; }
-    public String getNumeroConta() { return numero.contaBase(); }
-    public String getDigitoVerificadorConta() { return String.valueOf(numero.calcularDigitoVerificador()); }
+    public Long getNumeroConta() { return numero.contaBase(); }
+    public int getDigitoVerificadorConta() { return numero.calcularDigitoVerificador(); }
     public String getNumeroContaComposto() {
         return numero.contaComposta();
     }
-    public Documento getDocumento() {
-        return documento;
-    }
-    public BigDecimal getSaldo() { return saldo; }
-    public Long getVersao() { return versao; }
 }
