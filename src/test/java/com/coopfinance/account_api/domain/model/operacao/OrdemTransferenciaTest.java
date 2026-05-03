@@ -4,8 +4,7 @@ import com.coopfinance.account_api.domain.exception.NumeroContaInvalidoException
 import com.coopfinance.account_api.domain.exception.SaldoInsuficienteException;
 import com.coopfinance.account_api.domain.exception.ValorInvalidoException;
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
-import com.coopfinance.account_api.domain.model.conta.Documento;
-import com.coopfinance.account_api.domain.model.transacao.Transferencia;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.Transferencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +21,8 @@ class OrdemTransferenciaTest {
 
     @BeforeEach
     void setUp() {
-        Documento documento1 = new Documento("12345678901");
-        Documento documento2 = new Documento("98765432109");
-        contaOrigem = new ContaCorrente(UUID.randomUUID(), "11111", documento1);
-        contaDestino = new ContaCorrente(UUID.randomUUID(), "22222", documento2);
+        contaOrigem = new ContaCorrente(UUID.randomUUID(), 11111L, "12345678901");
+        contaDestino = new ContaCorrente(UUID.randomUUID(), 22222L, "98765432109");
         contaOrigem.depositar(new BigDecimal("1000.00"));
     }
 

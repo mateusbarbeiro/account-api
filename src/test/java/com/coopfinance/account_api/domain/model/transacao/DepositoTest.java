@@ -1,7 +1,6 @@
 package com.coopfinance.account_api.domain.model.transacao;
 
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
-import com.coopfinance.account_api.domain.model.conta.Documento;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -14,7 +13,7 @@ class DepositoTest {
 
     @Test
     void deveRetornarTipoMovimentacaoCorreto() {
-        final ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), "123456", new Documento("12345678909"));
+        final ContaCorrente conta = new ContaCorrente(UUID.randomUUID(), 123456L, "12345678909");
         final Deposito deposito = new Deposito(
                 UUID.randomUUID(),
                 conta,

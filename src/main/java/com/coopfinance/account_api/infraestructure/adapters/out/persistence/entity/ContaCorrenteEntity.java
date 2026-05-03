@@ -1,10 +1,6 @@
 package com.coopfinance.account_api.infraestructure.adapters.out.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,11 +23,11 @@ public class ContaCorrenteEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "numero_conta", nullable = false, length = 20)
-    private String numeroConta;
+    @Column(name = "numero_conta", nullable = false, unique = true)
+    private Long numeroConta;
 
-    @Column(name = "digito_verificador", nullable = false, length = 2)
-    private String digitoVerificador;
+    @Column(name = "digito_verificador", nullable = false)
+    private int digitoVerificador;
 
     @Column(name = "documento", nullable = false, length = 14)
     private String documento;

@@ -1,4 +1,4 @@
-package com.coopfinance.account_api.domain.model.transacao;
+package com.coopfinance.account_api.domain.model.transacao.transferencia;
 
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
 import com.coopfinance.account_api.domain.model.operacao.OrdemTransferencia;

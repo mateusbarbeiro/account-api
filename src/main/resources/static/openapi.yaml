@@ -21,18 +21,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AberturaContaRequest'
+              $ref: '#/components/schemas/AberturaContaCorrenteRequest'
       responses:
         '201':
           description: Conta criada com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContaResponse'
+                $ref: '#/components/schemas/ContaCorrenteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '422':
-          $ref: '#/components/responses/UnprocessableEntity'
 
   /api/v1/contas/deposito:
     post:
@@ -140,7 +138,7 @@ paths:
 
 components:
   schemas:
-    AberturaContaRequest:
+    AberturaContaCorrenteRequest:
       type: object
       required:
         - cpfCnpj
@@ -149,7 +147,7 @@ components:
           type: string
           description: Documento do cooperado.
 
-    ContaResponse:
+    ContaCorrenteResponse:
       type: object
       properties:
         numeroConta:

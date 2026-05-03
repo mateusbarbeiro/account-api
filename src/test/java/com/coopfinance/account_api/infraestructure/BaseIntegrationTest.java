@@ -19,7 +19,7 @@ public abstract class BaseIntegrationTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        RestAssured.basePath = "/v3";
+        RestAssured.basePath = "/api/v1";
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.config = RestAssured.config()

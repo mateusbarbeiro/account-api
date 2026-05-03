@@ -4,9 +4,10 @@ import com.coopfinance.account_api.domain.exception.NumeroContaInvalidoException
 import com.coopfinance.account_api.domain.exception.TransferenciaStatusInvalidaException;
 import com.coopfinance.account_api.domain.exception.ValorInvalidoException;
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
-import com.coopfinance.account_api.domain.model.transacao.Transferencia;
-import com.coopfinance.account_api.domain.model.transacao.TransferenciaEnviada;
-import com.coopfinance.account_api.domain.model.transacao.TransferenciaRecebida;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.Transferencia;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.TransferenciaEnviada;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.TransferenciaRecebida;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class OrdemTransferencia {
 
     public enum StatusTransferencia {
@@ -95,31 +97,7 @@ public class OrdemTransferencia {
         this.status = StatusTransferencia.FALHOU;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
     public List<Transferencia> getTransacoesGeradas() {
         return Collections.unmodifiableList(transacoesGeradas);
-    }
-
-    public LocalDateTime getDataHoraSolicitacao() {
-        return dataHoraSolicitacao;
-    }
-
-    public ContaCorrente getContaOrigem() {
-        return contaOrigem;
-    }
-
-    public ContaCorrente getContaDestino() {
-        return contaDestino;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public StatusTransferencia getStatus() {
-        return status;
     }
 }
