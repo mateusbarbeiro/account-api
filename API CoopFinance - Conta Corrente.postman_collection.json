@@ -1,0 +1,982 @@
+{
+  "info": {
+    "_postman_id": "95796a7f-1906-4d34-af63-c73887c742dc",
+    "name": "API CoopFinance - Conta Corrente",
+    "description": "API REST para gerenciamento de contas correntes e movimentações financeiras.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12350835"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "contas",
+              "item": [
+                {
+                  "name": "deposito",
+                  "item": [
+                    {
+                      "name": "Depósito em conta",
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/contas/deposito",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "contas",
+                            "deposito"
+                          ]
+                        },
+                        "description": "Realiza um depósito informando a conta e o valor."
+                      },
+                      "response": [
+                        {
+                          "name": "Depósito realizado com sucesso",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/deposito",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "deposito"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": ""
+                        },
+                        {
+                          "name": "Requisição mal formatada ou parâmetros inválidos.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/deposito",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "deposito"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        },
+                        {
+                          "name": "Recurso não encontrado (ex. Conta não existe).",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/deposito",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "deposito"
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "saque",
+                  "item": [
+                    {
+                      "name": "Saque em conta",
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/contas/saque",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "contas",
+                            "saque"
+                          ]
+                        },
+                        "description": "Realiza um saque informando a conta e o valor."
+                      },
+                      "response": [
+                        {
+                          "name": "Saque realizado com sucesso",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/saque",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "saque"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": ""
+                        },
+                        {
+                          "name": "Requisição mal formatada ou parâmetros inválidos.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/saque",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "saque"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        },
+                        {
+                          "name": "Recurso não encontrado (ex. Conta não existe).",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/saque",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "saque"
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        },
+                        {
+                          "name": "Erro de regra de negócio (ex. Saldo insuficiente).",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"numeroConta\": \"string\",\n  \"valor\": 6644.408134200281\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/saque",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "saque"
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "transferencia",
+                  "item": [
+                    {
+                      "name": "Transferência entre contas",
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"contaOrigem\": \"string\",\n  \"contaDestino\": \"string\",\n  \"valor\": 6124.443794038383\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/contas/transferencia",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "contas",
+                            "transferencia"
+                          ]
+                        },
+                        "description": "Realiza transferência informando conta de origem, conta de destino e valor."
+                      },
+                      "response": [
+                        {
+                          "name": "Transferência realizada com sucesso",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contaOrigem\": \"string\",\n  \"contaDestino\": \"string\",\n  \"valor\": 6124.443794038383\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/transferencia",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "transferencia"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": ""
+                        },
+                        {
+                          "name": "Requisição mal formatada ou parâmetros inválidos.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contaOrigem\": \"string\",\n  \"contaDestino\": \"string\",\n  \"valor\": 6124.443794038383\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/transferencia",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "transferencia"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        },
+                        {
+                          "name": "Recurso não encontrado (ex. Conta não existe).",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contaOrigem\": \"string\",\n  \"contaDestino\": \"string\",\n  \"valor\": 6124.443794038383\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/transferencia",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "transferencia"
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        },
+                        {
+                          "name": "Erro de regra de negócio (ex. Saldo insuficiente).",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contaOrigem\": \"string\",\n  \"contaDestino\": \"string\",\n  \"valor\": 6124.443794038383\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/transferencia",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                "transferencia"
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "{numeroConta}",
+                  "item": [
+                    {
+                      "name": "extrato",
+                      "item": [
+                        {
+                          "name": "Consulta de movimentações (Extrato bancário)",
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/contas/:numeroConta/extrato?dataInicio=1946-10-10&dataFim=1946-10-10",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "contas",
+                                ":numeroConta",
+                                "extrato"
+                              ],
+                              "query": [
+                                {
+                                  "key": "dataInicio",
+                                  "value": "1946-10-10",
+                                  "description": "Data inicial para o filtro de movimentações."
+                                },
+                                {
+                                  "key": "dataFim",
+                                  "value": "1946-10-10",
+                                  "description": "Data final para o filtro de movimentações."
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "numeroConta",
+                                  "value": "string"
+                                }
+                              ]
+                            },
+                            "description": "Retorna o saldo total e as movimentações, permitindo filtrar por períodos anteriores."
+                          },
+                          "response": [
+                            {
+                              "name": "Extrato consultado com sucesso",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/contas/:numeroConta/extrato?dataInicio=1946-10-10&dataFim=1946-10-10",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "contas",
+                                    ":numeroConta",
+                                    "extrato"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Data inicial para o filtro de movimentações.",
+                                      "key": "dataInicio",
+                                      "value": "1946-10-10"
+                                    },
+                                    {
+                                      "description": "Data final para o filtro de movimentações.",
+                                      "key": "dataFim",
+                                      "value": "1946-10-10"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "numeroConta",
+                                      "value": "string"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"saldoTotal\": 2461.447637986718,\n  \"movimentacoes\": [\n    {\n      \"data\": \"2013-03-10T07:14:58.661Z\",\n      \"tipo\": \"TRANSFERENCIA_ENVIADA\",\n      \"valor\": 7137.197514267724\n    },\n    {\n      \"data\": \"2013-01-18T10:06:26.128Z\",\n      \"tipo\": \"SAQUE\",\n      \"valor\": 735.8228713126524\n    }\n  ]\n}"
+                            },
+                            {
+                              "name": "Recurso não encontrado (ex. Conta não existe).",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/problem+json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/contas/:numeroConta/extrato?dataInicio=1946-10-10&dataFim=1946-10-10",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "contas",
+                                    ":numeroConta",
+                                    "extrato"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Data inicial para o filtro de movimentações.",
+                                      "key": "dataInicio",
+                                      "value": "1946-10-10"
+                                    },
+                                    {
+                                      "description": "Data final para o filtro de movimentações.",
+                                      "key": "dataFim",
+                                      "value": "1946-10-10"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "numeroConta",
+                                      "value": "string"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/problem+json"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Abertura de conta",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cpfCnpj\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/contas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v1",
+                        "contas"
+                      ]
+                    },
+                    "description": "Cria uma nova conta corrente com número e dígito verificador únicos atrelados a um CPF/CNPJ."
+                  },
+                  "response": [
+                    {
+                      "name": "Conta criada com sucesso",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cpfCnpj\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/contas",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "contas"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"numeroConta\": \"string\",\n  \"digitoVerificador\": \"string\",\n  \"cpfCnpj\": \"string\"\n}"
+                    },
+                    {
+                      "name": "Requisição mal formatada ou parâmetros inválidos.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cpfCnpj\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/contas",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "contas"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 4458,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
