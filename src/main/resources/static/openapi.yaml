@@ -218,7 +218,7 @@ components:
           format: date-time
         tipo:
           type: string
-          enum: [DEPOSITO, SAQUE, TRANSFERENCIA_ENTRADA, TRANSFERENCIA_SAIDA]
+          enum: [DEPOSITO, SAQUE, TRANSFERENCIA_ENVIADA, TRANSFERENCIA_RECEBIDA]
         valor:
           type: number
           format: double
