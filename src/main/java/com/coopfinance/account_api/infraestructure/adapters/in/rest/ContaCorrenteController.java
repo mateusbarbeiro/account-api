@@ -1,14 +1,9 @@
 package com.coopfinance.account_api.infraestructure.adapters.in.rest;
 
-import com.coopfinance.account_api.application.ports.in.commands.AberturaContaCorrenteCommand;
-import com.coopfinance.account_api.application.ports.in.commands.DepositoCommand;
-import com.coopfinance.account_api.application.ports.in.commands.SaqueCommand;
-import com.coopfinance.account_api.application.ports.in.commands.TransferenciaCommand;
+import com.coopfinance.account_api.application.ports.in.commands.*;
 import com.coopfinance.account_api.application.ports.in.results.ContaCorrenteResult;
-import com.coopfinance.account_api.application.ports.in.usecase.AberturaContaCorrenteUseCase;
-import com.coopfinance.account_api.application.ports.in.usecase.RealizarDepositoUseCase;
-import com.coopfinance.account_api.application.ports.in.usecase.RealizarSaqueUseCase;
-import com.coopfinance.account_api.application.ports.in.usecase.RealizarTransferenciaUseCase;
+import com.coopfinance.account_api.application.ports.in.results.ExtratoResult;
+import com.coopfinance.account_api.application.ports.in.usecase.*;
 import com.coopfinance.account_api.infraestructure.adapters.in.rest.mappers.ContaCorrenteRestMapper;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.ContaCorrenteApi;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.*;
@@ -27,18 +22,21 @@ public class ContaCorrenteController implements ContaCorrenteApi {
     private final RealizarSaqueUseCase realizarSaqueUseCase;
     private final RealizarTransferenciaUseCase realizarTransferenciaUseCase;
     private final ContaCorrenteRestMapper mapper;
+    private final ConsultarExtratoUseCase consultarExtratoUseCase;
 
     public ContaCorrenteController(
             AberturaContaCorrenteUseCase aberturaContaCorrenteUseCase,
             RealizarDepositoUseCase realizarDepositoUseCase,
             RealizarSaqueUseCase realizarSaqueUseCase,
             RealizarTransferenciaUseCase realizarTransferenciaUseCase,
-            ContaCorrenteRestMapper mapper) {
+            ContaCorrenteRestMapper mapper,
+            ConsultarExtratoUseCase consultarExtratoUseCase) {
         this.aberturaContaCorrenteUseCase = aberturaContaCorrenteUseCase;
         this.realizarDepositoUseCase = realizarDepositoUseCase;
         this.realizarSaqueUseCase = realizarSaqueUseCase;
         this.realizarTransferenciaUseCase = realizarTransferenciaUseCase;
         this.mapper = mapper;
+        this.consultarExtratoUseCase = consultarExtratoUseCase;
     }
 
     @Override
@@ -72,6 +70,9 @@ public class ContaCorrenteController implements ContaCorrenteApi {
 
     @Override
     public ResponseEntity<ExtratoResponse> consultarExtrato(String numeroConta, LocalDate dataInicio, LocalDate dataFim) {
-        return null;
+        ExtratoCommand extratoCommand = new ExtratoCommand(numeroConta, dataInicio, dataFim);
+        ExtratoResult result = consultarExtratoUseCase.executar(extratoCommand);
+
+        return ResponseEntity.ok().body(mapper.toOutput(result));
     }
 }
