@@ -1,15 +1,13 @@
 package com.coopfinance.account_api.infraestructure.config;
 
 import com.coopfinance.account_api.application.ports.in.usecase.AberturaContaCorrenteUseCase;
+import com.coopfinance.account_api.application.ports.in.usecase.ConsultarExtratoUseCase;
 import com.coopfinance.account_api.application.ports.out.generator.IdGenerator;
 import com.coopfinance.account_api.application.ports.out.generator.NumeroContaGenerator;
 import com.coopfinance.account_api.application.ports.out.repository.ContaCorrenteRepository;
 import com.coopfinance.account_api.application.ports.out.repository.OrdemTransferenciaRepository;
 import com.coopfinance.account_api.application.ports.out.repository.TransacaoRepository;
-import com.coopfinance.account_api.application.usecase.AberturaContaCorrenteService;
-import com.coopfinance.account_api.application.usecase.RealizarDepositoService;
-import com.coopfinance.account_api.application.usecase.RealizarSaqueService;
-import com.coopfinance.account_api.application.usecase.RealizarTransferenciaService;
+import com.coopfinance.account_api.application.usecase.*;
 import com.coopfinance.account_api.application.usecase.mapper.ContaCorrenteUseCaseMapper;
 import com.coopfinance.account_api.infraestructure.config.decorator.RealizarDepositoUseCaseRetryDecorator;
 import com.coopfinance.account_api.infraestructure.config.decorator.RealizarSaqueUseCaseRetryDecorator;
@@ -57,5 +55,10 @@ public class UseCaseBeanConfig {
     @Primary
     public RealizarTransferenciaUseCaseRetryDecorator realizarTransferenciaUseCaseComRetry(RealizarTransferenciaService casoDeUsoPuro) {
         return new RealizarTransferenciaUseCaseRetryDecorator(casoDeUsoPuro);
+    }
+
+    @Bean
+    public ConsultarExtratoUseCase consultarExtratoUseCase(ContaCorrenteRepository contaCorrenteRepository, TransacaoRepository transacaoRepository) {
+        return new ConsultarExtratoService(contaCorrenteRepository, transacaoRepository);
     }
 }
