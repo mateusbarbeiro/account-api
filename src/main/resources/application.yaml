@@ -16,14 +16,18 @@ spring:
     hibernate:
       ddl-auto: none
 
-# Utilizado para gerar o schema automaticamente para apoiar a migração do banco de dados com o Flyway.
-#    properties:
-#      jakarta:
-#        persistence:
-#          schema-generation:
-#            scripts:
-#              action: create  # Configura para criar o schema
-#              create-target: src/main/resources/db/migration/schema-gerado.sql
+resilience4j:
+  retry:
+    instances:
+      depositoRetry:
+        max-attempts: 5
+        wait-duration: 150ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        enable-randomized-wait: true # Habilita o Jitter (adiciona uma pequena variação aleatória no tempo de espera, fazendo com que as threads se descoordenem naturalmente)
+        randomized-wait-factor: 0.5  # Pode variar 50% para mais ou para menos
+        retry-exceptions:
+          - org.springframework.dao.OptimisticLockingFailureException
 
 springdoc:
   swagger-ui:

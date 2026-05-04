@@ -3,9 +3,9 @@ package com.coopfinance.account_api.application.usecase;
 import com.coopfinance.account_api.application.ports.in.commands.AberturaContaCorrenteCommand;
 import com.coopfinance.account_api.application.ports.in.results.ContaCorrenteResult;
 import com.coopfinance.account_api.application.ports.in.usecase.AberturaContaCorrenteUseCase;
-import com.coopfinance.account_api.application.ports.out.ContaCorrenteRepository;
-import com.coopfinance.account_api.application.ports.out.IdGenerator;
-import com.coopfinance.account_api.application.ports.out.NumeroContaGenerator;
+import com.coopfinance.account_api.application.ports.out.repository.ContaCorrenteRepository;
+import com.coopfinance.account_api.application.ports.out.generator.IdGenerator;
+import com.coopfinance.account_api.application.ports.out.generator.NumeroContaGenerator;
 import com.coopfinance.account_api.application.usecase.mapper.ContaCorrenteUseCaseMapper;
 import com.coopfinance.account_api.domain.model.conta.ContaCorrente;
 
