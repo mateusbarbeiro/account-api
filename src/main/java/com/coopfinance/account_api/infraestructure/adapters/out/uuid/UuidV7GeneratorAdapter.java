@@ -1,6 +1,6 @@
 package com.coopfinance.account_api.infraestructure.adapters.out.uuid;
 
-import com.coopfinance.account_api.application.ports.out.IdGenerator;
+import com.coopfinance.account_api.application.ports.out.generator.IdGenerator;
 import com.fasterxml.uuid.Generators;
 import org.springframework.context.annotation.Configuration;
 

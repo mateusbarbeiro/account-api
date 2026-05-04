@@ -52,9 +52,11 @@ public class ContaCorrente {
     }
 
     private void validarValorPositivo(BigDecimal valor) {
-        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0)
             throw new ValorInvalidoException("O valor da operação deve ser maior que zero.");
-        }
+
+        if (valor.compareTo(BigDecimal.valueOf(0.01)) < 0)
+            throw new ValorInvalidoException("O valor da operação deve ser no mínimo R$ 0,01.");
     }
 
     private void validarDigitoVerificador(int digito) {

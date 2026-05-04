@@ -1,7 +1,7 @@
 package com.coopfinance.account_api.infraestructure.adapters.out.sequence;
 
-import com.coopfinance.account_api.application.ports.out.ContaCorrenteRepository;
-import com.coopfinance.account_api.application.ports.out.NumeroContaGenerator;
+import com.coopfinance.account_api.application.ports.out.repository.ContaCorrenteRepository;
+import com.coopfinance.account_api.application.ports.out.generator.NumeroContaGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
