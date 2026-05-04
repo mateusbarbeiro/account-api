@@ -19,7 +19,7 @@ spring:
 resilience4j:
   retry:
     instances:
-      depositoRetry:
+      transacaoRetry:
         max-attempts: 5
         wait-duration: 150ms
         enable-exponential-backoff: true

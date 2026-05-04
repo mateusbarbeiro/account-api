@@ -2,9 +2,11 @@ package com.coopfinance.account_api.infraestructure.adapters.in.rest;
 
 import com.coopfinance.account_api.application.ports.in.commands.AberturaContaCorrenteCommand;
 import com.coopfinance.account_api.application.ports.in.commands.DepositoCommand;
+import com.coopfinance.account_api.application.ports.in.commands.SaqueCommand;
 import com.coopfinance.account_api.application.ports.in.results.ContaCorrenteResult;
 import com.coopfinance.account_api.application.ports.in.usecase.AberturaContaCorrenteUseCase;
 import com.coopfinance.account_api.application.ports.in.usecase.RealizarDepositoUseCase;
+import com.coopfinance.account_api.application.ports.in.usecase.RealizarSaqueUseCase;
 import com.coopfinance.account_api.infraestructure.adapters.in.rest.mappers.ContaCorrenteRestMapper;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.ContaCorrenteApi;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.*;
@@ -20,11 +22,17 @@ public class ContaCorrenteController implements ContaCorrenteApi {
 
     private final AberturaContaCorrenteUseCase aberturaContaCorrenteUseCase;
     private final RealizarDepositoUseCase realizarDepositoUseCase;
+    private final RealizarSaqueUseCase realizarSaqueUseCase;
     private final ContaCorrenteRestMapper mapper;
 
-    public ContaCorrenteController(AberturaContaCorrenteUseCase aberturaContaCorrenteUseCase, RealizarDepositoUseCase realizarDepositoUseCase, ContaCorrenteRestMapper mapper) {
+    public ContaCorrenteController(
+            AberturaContaCorrenteUseCase aberturaContaCorrenteUseCase,
+            RealizarDepositoUseCase realizarDepositoUseCase,
+            RealizarSaqueUseCase realizarSaqueUseCase,
+            ContaCorrenteRestMapper mapper) {
         this.aberturaContaCorrenteUseCase = aberturaContaCorrenteUseCase;
         this.realizarDepositoUseCase = realizarDepositoUseCase;
+        this.realizarSaqueUseCase = realizarSaqueUseCase;
         this.mapper = mapper;
     }
 
@@ -44,12 +52,14 @@ public class ContaCorrenteController implements ContaCorrenteApi {
     }
 
     @Override
-    public ResponseEntity<ExtratoResponse> consultarExtrato(String numeroConta, LocalDate dataInicio, LocalDate dataFim) {
-        return null;
+    public ResponseEntity<Void> realizarSaque(SaqueRequest saqueRequest) {
+        SaqueCommand input = mapper.toInput(saqueRequest);
+        realizarSaqueUseCase.executar(input);
+        return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Void> realizarSaque(SaqueRequest saqueRequest) {
+    public ResponseEntity<ExtratoResponse> consultarExtrato(String numeroConta, LocalDate dataInicio, LocalDate dataFim) {
         return null;
     }
 

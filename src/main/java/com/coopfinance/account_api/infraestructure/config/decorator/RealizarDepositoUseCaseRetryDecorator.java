@@ -18,7 +18,7 @@ public class RealizarDepositoUseCaseRetryDecorator implements RealizarDepositoUs
     }
 
     @Override
-    @Retry(name = "depositoRetry", fallbackMethod = "fallbackDeposito")
+    @Retry(name = "transacaoRetry", fallbackMethod = "fallbackDeposito")
     @Transactional
     public Void executar(DepositoCommand input) {
         return casoDeUsoPuro.executar(input);
