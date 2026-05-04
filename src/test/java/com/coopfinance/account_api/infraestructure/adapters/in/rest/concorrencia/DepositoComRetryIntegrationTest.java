@@ -24,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Component
-
 @DisplayName("Optimistic Lock Test")
 @Sql(scripts = "/db/db_load.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = "/db/db_clear.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
@@ -37,7 +36,7 @@ public class DepositoComRetryIntegrationTest extends BaseIntegrationTest {
         private ContaCorrenteJpaRepository contaRepository;
 
         @Test
-        void deveLancarExcecaoDeConcorrenciaAoEfetuarDezDepositosSimultaneos() throws InterruptedException {
+        void deveRetentarProcessarDepositoComConcorrenciaAoEfetuarDezDepositosSimultaneos() throws InterruptedException {
             int numeroDeThreads = 10;
             // Pool de 10 threads
             ExecutorService executor = Executors.newFixedThreadPool(numeroDeThreads);

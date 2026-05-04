@@ -7,8 +7,10 @@ import com.coopfinance.account_api.application.ports.out.repository.ContaCorrent
 import com.coopfinance.account_api.application.ports.out.repository.TransacaoRepository;
 import com.coopfinance.account_api.application.usecase.AberturaContaCorrenteService;
 import com.coopfinance.account_api.application.usecase.RealizarDepositoService;
+import com.coopfinance.account_api.application.usecase.RealizarSaqueService;
 import com.coopfinance.account_api.application.usecase.mapper.ContaCorrenteUseCaseMapper;
 import com.coopfinance.account_api.infraestructure.config.decorator.RealizarDepositoUseCaseRetryDecorator;
+import com.coopfinance.account_api.infraestructure.config.decorator.RealizarSaqueUseCaseRetryDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -30,5 +32,16 @@ public class UseCaseBeanConfig {
     @Primary
     public RealizarDepositoUseCaseRetryDecorator realizarDepositoUseCaseComRetry(RealizarDepositoService casoDeUsoPuro) {
         return new RealizarDepositoUseCaseRetryDecorator(casoDeUsoPuro);
+    }
+
+    @Bean
+    public RealizarSaqueService realizarSaqueService(TransacaoRepository transacaoRepository, ContaCorrenteRepository repository, IdGenerator idGenerator) {
+        return new RealizarSaqueService(transacaoRepository, repository, idGenerator);
+    }
+
+    @Bean
+    @Primary
+    public RealizarSaqueUseCaseRetryDecorator realizarSaqueUseCaseComRetry(RealizarSaqueService casoDeUsoPuro) {
+        return new RealizarSaqueUseCaseRetryDecorator(casoDeUsoPuro);
     }
 }
