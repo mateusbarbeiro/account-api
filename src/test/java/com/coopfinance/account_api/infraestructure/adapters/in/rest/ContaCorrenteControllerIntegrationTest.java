@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 @DisplayName("Conta Corrente Controller")
 public class ContaCorrenteControllerIntegrationTest extends BaseIntegrationTest {
@@ -421,6 +423,54 @@ public class ContaCorrenteControllerIntegrationTest extends BaseIntegrationTest 
                     .post("/contas/transferencia")
                     .then()
                     .statusCode(400);
+        }
+    }
+
+    @Nested
+    @DisplayName("GET /contas/{numeroConta}/extrato - Consulta extrato Contas Correntes")
+    @Sql(scripts = "/db/db_load_extrato.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+    @Sql(scripts = "/db/db_clear.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
+    class ConsultarExtratoContaCorrenteTest extends BaseIntegrationTest {
+
+        @Test
+        @DisplayName("Deve realizar busca Extrato Mes Atual Sem Parametros Filtro com sucesso")
+        void buscaExtratoMesAtualSemParametrosFiltro() {
+            given()
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get("/contas/1-8/extrato")
+                    .then()
+                    .statusCode(200)
+                    .body("saldoTotal", equalTo(BigDecimal.valueOf(999.99)))
+                    .body("movimentacoes.size()", is(3));
+        }
+
+        @Test
+        @DisplayName("Deve realizar busca Extrato Mes Anterior Sem Parametros Filtro com sucesso")
+        void buscaExtratoMesAnteriorComParametrosFiltro() {
+            given()
+                    .pathParam("numeroConta", "1-8")
+                    .queryParam("dataInicio", LocalDate.of(2026, 4, 1).toString())
+                    .queryParam("dataFim", LocalDate.of(2026, 5, 31).toString())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get("/contas/{numeroConta}/extrato")
+                    .then()
+                    .statusCode(200)
+                    .body("saldoTotal", equalTo(BigDecimal.valueOf(999.99)))
+                    .body("movimentacoes.size()", is(4));
+
+            given()
+                    .pathParam("numeroConta", "1-8")
+                    .queryParam("dataInicio", LocalDate.of(2026, 4, 1).toString())
+                    .queryParam("dataFim", LocalDate.of(2026, 4, 30).toString())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get("/contas/{numeroConta}/extrato")
+                    .then()
+                    .statusCode(200)
+                    .body("saldoTotal", equalTo(BigDecimal.valueOf(999.99)))
+                    .body("movimentacoes.size()", is(1));
         }
     }
 }
