@@ -12,7 +12,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,9 +28,14 @@ public class OrdemTransferencia {
     private final BigDecimal valor;
     private final LocalDateTime dataHoraSolicitacao;
     private StatusTransferencia status;
-    private final List<Transferencia> transacoesGeradas = new ArrayList<>();
+    private TransferenciaRecebida transferenciaRecebida;
+    private TransferenciaEnviada transferenciaEnviada;
 
     public OrdemTransferencia(UUID id, ContaCorrente contaOrigem, ContaCorrente contaDestino, BigDecimal valor) {
+        this(id, contaOrigem, contaDestino, valor, LocalDateTime.now(), StatusTransferencia.PENDENTE);
+    }
+
+    public OrdemTransferencia(UUID id, ContaCorrente contaOrigem, ContaCorrente contaDestino, BigDecimal valor, LocalDateTime dataHoraSolicitacao, StatusTransferencia status) {
         validarValorTransferencia(valor);
         validarContasTransferencia(contaOrigem, contaDestino);
 
@@ -39,22 +43,22 @@ public class OrdemTransferencia {
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
         this.valor = valor;
-        this.dataHoraSolicitacao = LocalDateTime.now();
-        setStatusPendente();
+        this.dataHoraSolicitacao = dataHoraSolicitacao;
+        this.status = status;
     }
 
     public void efetivar(UUID idTransacaoDebito, UUID idTransacaoCredito) {
         try {
             setStatusConcluida();
-            this.transacoesGeradas.add(gerarTransacaoDebito(idTransacaoDebito));
-            this.transacoesGeradas.add(gerarTransacaoCredito(idTransacaoCredito));
+            this.transferenciaEnviada = gerarTransacaoDebito(idTransacaoDebito);
+            this.transferenciaRecebida = gerarTransacaoCredito(idTransacaoCredito);
         } catch (Exception e) {
             setStatusFalha();
             throw e;
         }
     }
 
-    private Transferencia gerarTransacaoDebito(UUID uuid) {
+    private TransferenciaEnviada gerarTransacaoDebito(UUID uuid) {
         validarStatusTransferenciaParaGerarTransacao();
         BigDecimal saldoAnterior = this.contaOrigem.getSaldo();
         this.contaOrigem.sacar(this.valor);
@@ -62,7 +66,7 @@ public class OrdemTransferencia {
         return new TransferenciaEnviada(uuid, this.contaOrigem, this.valor.negate(), saldoAnterior, this.contaOrigem.getSaldo(), this);
     }
 
-    private Transferencia gerarTransacaoCredito(UUID uuid) {
+    private TransferenciaRecebida gerarTransacaoCredito(UUID uuid) {
         validarStatusTransferenciaParaGerarTransacao();
         BigDecimal saldoAnterior = this.contaDestino.getSaldo();
         this.contaDestino.depositar(this.valor);
@@ -85,10 +89,6 @@ public class OrdemTransferencia {
             throw new ValorInvalidoException("Valor da transferência deve ser maior que zero.");
     }
 
-    private void setStatusPendente() {
-        this.status = StatusTransferencia.PENDENTE;
-    }
-
     private void setStatusConcluida() {
         this.status = StatusTransferencia.CONCLUIDA;
     }
@@ -98,6 +98,13 @@ public class OrdemTransferencia {
     }
 
     public List<Transferencia> getTransacoesGeradas() {
-        return Collections.unmodifiableList(transacoesGeradas);
+        List<Transferencia> transacoes = new ArrayList<>();
+        if (transferenciaEnviada != null)
+            transacoes.add(transferenciaEnviada);
+
+        if (transferenciaRecebida != null)
+            transacoes.add(transferenciaRecebida);
+
+        return transacoes;
     }
 }

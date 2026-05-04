@@ -4,13 +4,16 @@ import com.coopfinance.account_api.application.ports.in.usecase.AberturaContaCor
 import com.coopfinance.account_api.application.ports.out.generator.IdGenerator;
 import com.coopfinance.account_api.application.ports.out.generator.NumeroContaGenerator;
 import com.coopfinance.account_api.application.ports.out.repository.ContaCorrenteRepository;
+import com.coopfinance.account_api.application.ports.out.repository.OrdemTransferenciaRepository;
 import com.coopfinance.account_api.application.ports.out.repository.TransacaoRepository;
 import com.coopfinance.account_api.application.usecase.AberturaContaCorrenteService;
 import com.coopfinance.account_api.application.usecase.RealizarDepositoService;
 import com.coopfinance.account_api.application.usecase.RealizarSaqueService;
+import com.coopfinance.account_api.application.usecase.RealizarTransferenciaService;
 import com.coopfinance.account_api.application.usecase.mapper.ContaCorrenteUseCaseMapper;
 import com.coopfinance.account_api.infraestructure.config.decorator.RealizarDepositoUseCaseRetryDecorator;
 import com.coopfinance.account_api.infraestructure.config.decorator.RealizarSaqueUseCaseRetryDecorator;
+import com.coopfinance.account_api.infraestructure.config.decorator.RealizarTransferenciaUseCaseRetryDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -43,5 +46,16 @@ public class UseCaseBeanConfig {
     @Primary
     public RealizarSaqueUseCaseRetryDecorator realizarSaqueUseCaseComRetry(RealizarSaqueService casoDeUsoPuro) {
         return new RealizarSaqueUseCaseRetryDecorator(casoDeUsoPuro);
+    }
+
+    @Bean
+    public RealizarTransferenciaService realizarTransferenciaService(TransacaoRepository transacaoRepository, ContaCorrenteRepository repository, OrdemTransferenciaRepository ordemTransferenciaRepository, IdGenerator idGenerator) {
+        return new RealizarTransferenciaService(transacaoRepository, repository, ordemTransferenciaRepository, idGenerator);
+    }
+
+    @Bean
+    @Primary
+    public RealizarTransferenciaUseCaseRetryDecorator realizarTransferenciaUseCaseComRetry(RealizarTransferenciaService casoDeUsoPuro) {
+        return new RealizarTransferenciaUseCaseRetryDecorator(casoDeUsoPuro);
     }
 }

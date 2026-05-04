@@ -3,11 +3,13 @@ package com.coopfinance.account_api.infraestructure.adapters.in.rest.mappers;
 import com.coopfinance.account_api.application.ports.in.commands.AberturaContaCorrenteCommand;
 import com.coopfinance.account_api.application.ports.in.commands.DepositoCommand;
 import com.coopfinance.account_api.application.ports.in.commands.SaqueCommand;
+import com.coopfinance.account_api.application.ports.in.commands.TransferenciaCommand;
 import com.coopfinance.account_api.application.ports.in.results.ContaCorrenteResult;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.AberturaContaCorrenteRequest;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.ContaCorrenteResponse;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.DepositoRequest;
 import com.coopfinance.account_api.infrastructure.api.rest.generated.model.SaqueRequest;
+import com.coopfinance.account_api.infrastructure.api.rest.generated.model.TransferenciaRequest;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -20,4 +22,6 @@ public interface ContaCorrenteRestMapper {
     DepositoCommand toInput(DepositoRequest request);
 
     SaqueCommand toInput(SaqueRequest request);
+
+    TransferenciaCommand toInput(TransferenciaRequest request);
 }

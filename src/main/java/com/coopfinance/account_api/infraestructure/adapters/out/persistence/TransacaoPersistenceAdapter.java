@@ -3,6 +3,8 @@ package com.coopfinance.account_api.infraestructure.adapters.out.persistence;
 import com.coopfinance.account_api.application.ports.out.repository.TransacaoRepository;
 import com.coopfinance.account_api.domain.model.transacao.Deposito;
 import com.coopfinance.account_api.domain.model.transacao.Saque;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.TransferenciaEnviada;
+import com.coopfinance.account_api.domain.model.transacao.transferencia.TransferenciaRecebida;
 import com.coopfinance.account_api.infraestructure.adapters.out.persistence.entity.transacao.TransacaoEntity;
 import com.coopfinance.account_api.infraestructure.adapters.out.persistence.mapper.TransacaoPersistenceMapper;
 import com.coopfinance.account_api.infraestructure.adapters.out.persistence.repository.TransacaoJpaRepository;
@@ -26,6 +28,18 @@ public class TransacaoPersistenceAdapter implements TransacaoRepository {
     @Override
     public void salvar(Saque saque) {
         TransacaoEntity entity = mapper.toEntity(saque);
+        repository.save(entity);
+    }
+
+    @Override
+    public void salvar(TransferenciaRecebida transferencia) {
+        TransacaoEntity entity = mapper.toEntity(transferencia);
+        repository.save(entity);
+    }
+
+    @Override
+    public void salvar(TransferenciaEnviada transferencia) {
+        TransacaoEntity entity = mapper.toEntity(transferencia);
         repository.save(entity);
     }
 }
